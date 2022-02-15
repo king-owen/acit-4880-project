@@ -15,8 +15,15 @@ def input_csv():
     df["R_SA_6P_10"]= [float(i[1:]) for i in df['R_SA_6P_10']]
     df["R_SU_6P_10"]= [float(i[1:]) for i in df['R_SU_6P_10']]
     df["R_SU_9A_6P"]= [float(i[1:]) for i in df['R_SU_9A_6P']]
-    print(df)
     return df
+
+def get_geo_location():
+    input=input_csv()
+    geo_list = []
+    for parking in input['Geo Local Area']:
+        if parking not in geo_list:
+            geo_list.append(parking)
+    return geo_list
 
 def get_under_2():
     """ Will print out the amount of parking there is per region under 2 dollars/hr"""
@@ -36,14 +43,25 @@ def get_under_2():
     parking_numbers = dict( sorted(parking_numbers.items(), key=operator.itemgetter(1),reverse=True))
     keys = parking_numbers.keys()
     vals = parking_numbers.values()
-    print(vals)
     val_list = list(vals)
     key_list = list(keys)
-    print(val_list)
     plt.bar(range(len(parking_numbers)),val_list, tick_label = key_list)
     plt.show()
 
+def get_mm_weekday():
+    '''get mean and median of parking '''
+    
+    geo_list = get_geo_location()
+    mm_list = []
+    for place in geo_list:
+        input = input_csv()
+        input = input.drop(input[input["Geo Local Area"] == place].index)
+        mm_list.append([input["R_MF_9A_6P"].mean(),input["R_MF_9A_6P"].median(), input["R_MF_9A_6P"].min(), input["R_MF_9A_6P"].max()])
+    data = pd.DataFrame(mm_list, index = geo_list, columns = ['Mean', 'Median', 'Min', 'Max'])
+    print(data)
+
 def main():
     get_under_2()
+    get_mm_weekday()
 
 main()
