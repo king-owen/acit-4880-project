@@ -25,12 +25,12 @@ def get_geo_location():
             geo_list.append(parking)
     return geo_list
 
-def get_under_2():
+def get_under_2(time):
     """ Will print out the amount of parking there is per region under 2 dollars/hr"""
  
     df = input_csv()
     #Finding where they have day time parking the is under 2.00
-    df = df.drop(df[df["R_MF_9A_6P"] <= 2].index)
+    df = df.drop(df[df[time] <= 2].index)
 
     parking_numbers = {}
 
@@ -48,20 +48,23 @@ def get_under_2():
     plt.bar(range(len(parking_numbers)),val_list, tick_label = key_list)
     plt.show()
 
-def get_mm_weekday():
-    '''get mean and median of parking '''
+def get_parking_info(time):
+    '''get mean, median, min, max of parking '''
     
     geo_list = get_geo_location()
     mm_list = []
     for place in geo_list:
         input = input_csv()
         input = input.drop(input[input["Geo Local Area"] == place].index)
-        mm_list.append([input["R_MF_9A_6P"].mean(),input["R_MF_9A_6P"].median(), input["R_MF_9A_6P"].min(), input["R_MF_9A_6P"].max()])
+        mm_list.append([input[time].mean(),input[time].median(), input[time].min(), input[time].max()])
     data = pd.DataFrame(mm_list, index = geo_list, columns = ['Mean', 'Median', 'Min', 'Max'])
     print(data)
 
 def main():
-    get_under_2()
-    get_mm_weekday()
+    time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
+    time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
+    time = time_night[1]
+    get_under_2(time)
+    get_parking_info(time)
 
 main()
