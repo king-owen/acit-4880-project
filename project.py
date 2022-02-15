@@ -25,12 +25,12 @@ def get_geo_location():
             geo_list.append(parking)
     return geo_list
 
-def get_under_2(time):
+def get_num_of_spots_under_price(time, price):
     """ Will print out the amount of parking there is per region under 2 dollars/hr"""
  
     df = input_csv()
     #Finding where they have day time parking the is under 2.00
-    df = df.drop(df[df[time] <= 2].index)
+    df = df.drop(df[df[time] <= price].index)
 
     parking_numbers = {}
 
@@ -64,7 +64,8 @@ def main():
     time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
     time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
     time = time_night[1]
-    get_under_2(time)
+    price = 2
+    get_num_of_spots_under_price(time, price)
     get_parking_info(time)
 
 main()
