@@ -79,7 +79,7 @@ def regression(time_limit):
     X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
     lin_reg = LinearRegression()
     lin_reg.fit(X_train, y_train)
-    data = pd.DataFrame({ 'T_MF_9A_6P': [1]})
+    data = pd.DataFrame({ 'T_MF_9A_6P': [time_limit]})
     predictions = lin_reg.predict(data)
     print(predictions)
 def main():
@@ -89,5 +89,5 @@ def main():
     #price = 2
     #get_num_of_spots_under_price(time, price)
     #get_parking_info(time)
-    regression(3)
+    regression(10)
 main()
