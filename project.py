@@ -71,8 +71,9 @@ def get_parking_info(time):
     data = pd.DataFrame(mm_list, index = geo_list, columns = ['Mean', 'Median', 'Min', 'Max'])
     print(data)
 
-def regression():
+def regression(time_limit):
     input = input_csv()
+    input = input.drop(input[input['T_MF_9A_6P'] < time_limit].index)
     X = input [['T_MF_9A_6P']]
     y = input.R_MF_9A_6P
     X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
@@ -88,5 +89,5 @@ def main():
     #price = 2
     #get_num_of_spots_under_price(time, price)
     #get_parking_info(time)
-    regression()
+    regression(3)
 main()
