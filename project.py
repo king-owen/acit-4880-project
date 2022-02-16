@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from math import *
 import operator
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 def input_csv():
     df = pd.read_csv("parking-meters.csv", sep = ';')
 
@@ -15,6 +17,15 @@ def input_csv():
     df["R_SA_6P_10"]= [float(i[1:]) for i in df['R_SA_6P_10']]
     df["R_SU_6P_10"]= [float(i[1:]) for i in df['R_SU_6P_10']]
     df["R_SU_9A_6P"]= [float(i[1:]) for i in df['R_SU_9A_6P']]
+    time_limit = []
+    for i in df['T_MF_9A_6P']:
+        num = str(i).split(' ')
+        #if i == 'No Time Limit' or i == 'other':
+        if not num[0].isnumeric():
+            time_limit.append(9999999999)
+        else:
+            time_limit.append(float(num[0]))
+    df['T_MF_9A_6P'] = time_limit
     return df
 
 def get_geo_location():
@@ -60,12 +71,22 @@ def get_parking_info(time):
     data = pd.DataFrame(mm_list, index = geo_list, columns = ['Mean', 'Median', 'Min', 'Max'])
     print(data)
 
+def regression():
+    input = input_csv()
+    X = input [['T_MF_9A_6P']]
+    y = input.R_MF_9A_6P
+    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
+    lin_reg = LinearRegression()
+    lin_reg.fit(X_train, y_train)
+    data = pd.DataFrame({ 'T_MF_9A_6P': [1]})
+    predictions = lin_reg.predict(data)
+    print(predictions)
 def main():
-    time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
-    time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
-    time = time_night[1]
-    price = 2
-    get_num_of_spots_under_price(time, price)
-    get_parking_info(time)
-
+    #time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
+    #time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
+    #time = time_night[1]
+    #price = 2
+    #get_num_of_spots_under_price(time, price)
+    #get_parking_info(time)
+    regression()
 main()
