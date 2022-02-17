@@ -5,6 +5,8 @@ ENV MYSQL_DATABASE video
 ENV MYSQL_USER video
 ENV MYSQL_PASSWORD video
 
+EXPOSE 3306
+
 #-p${MYSQL_ROOT_PASSWORD}
 CMD mysql start
 CMD mysql -u root -e "create database video CHARACTER SET utf8 COLLATE utf8_bin"
