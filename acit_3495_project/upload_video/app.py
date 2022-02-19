@@ -1,10 +1,12 @@
 import os
 from flask import Flask, render_template, request
+import requests
 #from paramiko import SSHClient
 #from scp import SCPClient
 app = Flask(__name__)
 #ssh = SSHClient()
 #ssh.load_system_host_keys()
+
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
 #print(os.path.dirname(os.path.realpath(__file__)))
