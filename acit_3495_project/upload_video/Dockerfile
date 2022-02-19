@@ -11,5 +11,8 @@ RUN mkdir -p upload_video
 #ADD https://github.com/king-owen/acit-4880-project/tree/main/acit_3495_project/upload_video/app.py /upload_video/
 RUN git clone https://github.com/king-owen/acit-4880-project.git
 
+#WORKDIR /acit-4880-project/acit_3495_project/upload_video
+
 #CMD mkdir upload_foolder && \
-CMD tail -f /dev/null
+CMD python /acit-4880-project/acit_3495_project/upload_video/app.py && \ 
+tail -f /dev/null
