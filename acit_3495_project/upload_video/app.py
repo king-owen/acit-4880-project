@@ -1,6 +1,10 @@
 import os
 from flask import Flask, render_template, request
+#from paramiko import SSHClient
+#from scp import SCPClient
 app = Flask(__name__)
+#ssh = SSHClient()
+#ssh.load_system_host_keys()
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
 #print(os.path.dirname(os.path.realpath(__file__)))
@@ -22,7 +26,13 @@ def upload_file():
         #f.save(f.filename)
         #print(f)
         f.save(os.path.join(uploads, f.filename))
+
+        #ssh.connect('root@172.18.0.3')
+        #with SCPClient(ssh.get_transport()) as scp:
+        #    scp.put(os.path.join(uploads, f.filename), os.path.join('uploads/', f.filename))
         
+        request.post('172.18.0.2/uploads', files=('/upload_folder/' + f.filename))
+
         return 'successful upload'
 
 
