@@ -33,7 +33,7 @@ def upload_file():
         #with SCPClient(ssh.get_transport()) as scp:
         #    scp.put(os.path.join(uploads, f.filename), os.path.join('uploads/', f.filename))
         
-        request.post('172.18.0.2/uploads', files=('/upload_folder/' + f.filename))
+        #request.post('172.18.0.2/uploads', files=('/upload_folder/' + f.filename))
 
         return 'successful upload'
 
