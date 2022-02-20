@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+  db:
+    image:
+    restart: always
+    networks:
+      network1:
+        ipv4_address: 172.6.0.2
+
+
+  upload:
+    image:
+    ports:
+      - "5000:5000"
+    restart: always
+    networks:
+      network1:
+        ipv4_address: 172.6.0.3
+
+  download:
+    image:
+    ports:
+      - "5050:5050"
+    restart: always
+    networks:
+      network1:
+        ipv4_address: 172.6.0.4
+
+  files:
+    image:
+    restart: always
+    networks:
+      network1:
+        ipv4_address: 172.6.0.5
+
+network:
+  network1:
+  driver: bridge
+  ipam:
+    config:
+      - subnet: 172.6.0.0/16
+        gateway: 172.6.0.1
