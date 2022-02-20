@@ -25,7 +25,7 @@ def upload_files():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        session = ftplib.FTP('localhost', 'root', 'password')
+        session = ftplib.FTP('172.6.0.5', 'root', 'password')
         f = request.files['file']
         #f.save(f.filename)
         print(f.filename)
