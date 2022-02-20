@@ -5,7 +5,7 @@ from pyftpdlib.servers import FTPServer
 
 # The port the FTP server will listen on.
 # This must be greater than 1023 unless you run this script as root.
-FTP_PORT = 2121
+FTP_PORT = 21
 
 # The name of the FTP user that can log in.
 FTP_USER = "root"
@@ -15,7 +15,7 @@ FTP_PASSWORD = "password"
 
 # The directory the FTP user will have full read/write access to.
 #FTP_DIRECTORY = "/srv/users/SYSUSER/apps/APPNAME/public/"
-FTP_DIRECTORY = "/uploads"
+FTP_DIRECTORY = "./uploads"
 
 
 

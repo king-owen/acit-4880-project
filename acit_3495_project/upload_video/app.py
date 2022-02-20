@@ -1,11 +1,12 @@
 import os
 from flask import Flask, render_template, request
-import requests
+import ftplib
 #import paramiko
 #from scp import SCPClient
 app = Flask(__name__)
 #ssh = paramiko.SSHClient()
 #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+#session = ftplib.FTP('0.0.0.0:2121', 'root', 'password')
 
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
@@ -24,10 +25,14 @@ def upload_files():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        session = ftplib.FTP('localhost', 'root', 'password')
         f = request.files['file']
         #f.save(f.filename)
-        #print(f)
+        print(f.filename)
         f.save(os.path.join(uploads, f.filename))
+        file_serve = open("./upload_folder/" + f.filename, "rb")
+        session.storbinary(("STOR " + f.filename), file_serve)
+        session.quit()
 
         #ssh.connect('root@172.18.0.3')
         #with SCPClient(ssh.get_transport()) as scp:
