@@ -66,9 +66,9 @@ def get_parking_info(time):
     mm_list = []
     for place in geo_list:
         input = input_csv()
-        input = input.drop(input[input["Geo Local Area"] == place].index)
-        mm_list.append([input[time].mean(),input[time].median(), input[time].min(), input[time].max()])
-    data = pd.DataFrame(mm_list, index = geo_list, columns = ['Mean', 'Median', 'Min', 'Max'])
+        input = input.drop(input[input["Geo Local Area"] != place].index)
+        mm_list.append([input[time].mean(),input[time].median(), input[time].min(), input[time].max(), input[time].std(), len(input[time])])
+    data = pd.DataFrame(mm_list, index = geo_list, columns = ['Mean', 'Median', 'Min', 'Max', 'Std', 'Num of Spots'])
     print(data)
 
 def regression(time_limit):
@@ -113,10 +113,10 @@ def max_cost(time):
 def main():
     time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
     time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
-    time = time_day[1]
+    time = time_night[0]
     #price = 2
     #get_num_of_spots_under_price(time, price)
-    #get_parking_info(time)
+    get_parking_info(time)
     #regression(3)
-    max_cost(time)
+    #max_cost(time)
 main()
