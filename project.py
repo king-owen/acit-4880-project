@@ -82,12 +82,41 @@ def regression(time_limit):
     data = pd.DataFrame({ 'T_MF_9A_6P': [time_limit]})
     predictions = lin_reg.predict(data)
     print(predictions)
+
+def max_cost(time): 
+    input = input_csv()
+    geo_loc = get_geo_location()
+
+    if time.endswith('9A_6P'):
+        duration = 9
+    else:
+        duration = 4
+    
+    projection_list = {}
+
+    for y in geo_loc: 
+        projection_math= []
+        for x in range(len(input)):
+            if input.iloc[x]['Geo Local Area'] == y:
+                projection_math.append(duration * input.iloc[x][time])
+        projection_list[y] = sum(projection_math)
+    keys = projection_list.keys()
+    vals = projection_list.values()
+    val_list = list(vals)
+    key_list = list(keys)
+    plt.bar(range(len(projection_list)),val_list, tick_label = key_list)
+    plt.xticks(fontsize = 6, rotation = 90)
+    plt.show()
+    print(projection_list)
+
+
 def main():
-    #time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
-    #time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
-    #time = time_night[1]
+    time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
+    time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
+    time = time_day[1]
     #price = 2
     #get_num_of_spots_under_price(time, price)
     #get_parking_info(time)
-    regression(10)
+    #regression(3)
+    max_cost(time)
 main()
