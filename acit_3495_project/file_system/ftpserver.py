@@ -1,6 +1,7 @@
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
+import os
 
 
 # The port the FTP server will listen on.
@@ -13,6 +14,7 @@ FTP_USER = "root"
 # The FTP user's password.
 FTP_PASSWORD = "password"
 
+print(os.getcwd())
 # The directory the FTP user will have full read/write access to.
 #FTP_DIRECTORY = "/srv/users/SYSUSER/apps/APPNAME/public/"
 #FTP_DIRECTORY = "/acit-4880-project/acit_3495/file_system/uploads"
