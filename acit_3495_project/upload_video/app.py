@@ -1,9 +1,16 @@
 import os
 from flask import Flask, render_template, request
 import ftplib
+import mysql.connector
 #import paramiko
 #from scp import SCPClient
 app = Flask(__name__)
+
+mydb = mysql.connector.connect(
+    host='172.6.0.2',
+    user='root',
+    database='video'
+)
 #ssh = paramiko.SSHClient()
 #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 #session = ftplib.FTP('0.0.0.0:2121', 'root', 'password')
@@ -33,6 +40,9 @@ def upload_file():
         file_serve = open("/acit-4880-project/acit_3495_project/upload_video/upload_folder/" + f.filename, "rb")
         session.storbinary(("STOR " + f.filename), file_serve)
         session.quit()
+        mycursor = mydb.cursor()
+        mycursor.execute("INSERT INTO videos (name, path) VALUES (%s, %s)", f.filename, "/acit-4880-project/acit_3495_project/file_system/uploads/")
+        mydb.commit()
 
         #ssh.connect('root@172.18.0.3')
         #with SCPClient(ssh.get_transport()) as scp:

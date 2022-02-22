@@ -3,7 +3,7 @@ FROM python:3
 RUN apt-get update
 RUN apt install -y vim
 RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir flask requests pyftplib
+RUN pip install --no-cache-dir flask requests pyftplib mysql
 #socket, tqdm
 #RUN pip install --no-cache-dir os
 

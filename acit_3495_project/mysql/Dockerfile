@@ -1,7 +1,9 @@
 FROM ubuntu:18.04
 
 RUN apt-get update
-RUN apt-get install -y mysql-server
+RUN apt-get install -y mysql-server 
+
+EXPOSE 3306
 #RUN
 CMD apt install -y sudo && \
 service mysql start && \
