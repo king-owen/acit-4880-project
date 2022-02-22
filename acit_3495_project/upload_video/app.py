@@ -30,7 +30,7 @@ def upload_file():
         #f.save(f.filename)
         print(f.filename)
         f.save(os.path.join(uploads, f.filename))
-        file_serve = open("./upload_folder/" + f.filename, "rb")
+        file_serve = open("/acit-4880-project/acit_3495/upload_folder/upload_folder/" + f.filename, "rb")
         session.storbinary(("STOR " + f.filename), file_serve)
         session.quit()
 

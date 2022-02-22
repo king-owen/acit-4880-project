@@ -4,8 +4,10 @@ services:
   db:
     image: kingofthewestwest/mysql
     restart: always
+    #links:
+    #  - "db:mysql"
     networks:
-      network1:
+      default:
         ipv4_address: 172.6.0.2
 
 
@@ -14,8 +16,10 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    #links:
+    #  - "up:upload"
     networks:
-      network1:
+      default:
         ipv4_address: 172.6.0.3
 
   download:
@@ -23,21 +27,26 @@ services:
     ports:
       - "5050:5050"
     restart: always
+    #links:
+    #  - "down:download"
     networks:
-      network1:
+      default:
         ipv4_address: 172.6.0.4
 
   files:
     image: kingofthewestwest/files
     restart: always
+    #links:
+    #  - "files:flieshare"
     networks:
-      network1:
+      default:
         ipv4_address: 172.6.0.5
 
-network:
-  network1:
+networks:
+  default:
     driver: bridge
     ipam:
+      driver: default
       config:
         - subnet: 172.6.0.0/16
           gateway: 172.6.0.1
