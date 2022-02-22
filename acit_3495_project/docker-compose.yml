@@ -2,7 +2,8 @@ version: '2'
 
 services:
   db:
-    image: kingofthewestwest/mysql
+    #image: kingofthewestwest/mysql
+    image: ./mysql/.
     restart: always
     networks:
       network1:
@@ -10,7 +11,8 @@ services:
 
 
   upload:
-    image: kingofthewestwest/app_py
+    #image: kingofthewestwest/app_py
+    image: ./upload_video/.
     ports:
       - "5000:5000"
     restart: always
@@ -19,7 +21,8 @@ services:
         ipv4_address: 172.6.0.3
 
   download:
-    image: kingofthewestwest/streaming
+    #image: kingofthewestwest/streaming
+    image: ./video_streaming/.
     ports:
       - "5050:5050"
     restart: always
@@ -28,7 +31,8 @@ services:
         ipv4_address: 172.6.0.4
 
   files:
-    image: kingofthewestwest/files
+    #image: kingofthewestwest/files
+    image : ./file_system/.
     restart: always
     networks:
       network1:
