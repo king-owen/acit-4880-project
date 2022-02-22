@@ -15,7 +15,7 @@ FTP_PASSWORD = "password"
 
 # The directory the FTP user will have full read/write access to.
 #FTP_DIRECTORY = "/srv/users/SYSUSER/apps/APPNAME/public/"
-FTP_DIRECTORY = "uploads/"
+FTP_DIRECTORY = "/uploads"
 
 
 
