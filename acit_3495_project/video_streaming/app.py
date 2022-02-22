@@ -9,7 +9,7 @@ uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_fold
 #print(os.path.dirname(os.path.realpath(__file__)))
 print(uploads)
 
-path = '~/acit-4880-project/acit_3495_project/file_system/uploads/'
+path = '/acit-4880-project/acit_3495_project/file_system/uploads/'
 #path = os.path.join("C:", "Users", "oande", "BCIT Term 4", "ACIT 4880", "Project", "GitHub", "acit_3495_project", "file_system", "uploads")
 filename = 'WIN_20220219_15_42_17_Pro.mp4'
 
@@ -26,7 +26,7 @@ def download_file():
     if request.method == 'GET':
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
-        print(session.pwd())
+        print(ftplib.FTP.pwd())
         session.retrbinary("RETR " + filename, open((path + filename), "wb").write)
         os.rename(filename, "./static/" + filename)
         #f = request.files['file']
