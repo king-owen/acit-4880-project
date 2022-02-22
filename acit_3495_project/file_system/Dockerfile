@@ -18,6 +18,7 @@ EXPOSE 21
 
 CMD git clone https://github.com/king-owen/acit-4880-project.git && \
 cd acit-4880-project/acit_3495_project/file_system/ && \
+mkdir -p uploads && \
 python ftpserver.py && \
 #python acit-4880-project/acit_3495_project/file_system/ftpserver.py && \
 #mkdir -p uploads && \
