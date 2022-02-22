@@ -83,7 +83,7 @@ def regression(time_limit):
     predictions = lin_reg.predict(data)
     print(predictions)
 
-def max_cost(time): 
+def revenue(time): 
     input = input_csv()
     geo_loc = get_geo_location()
 
@@ -106,6 +106,9 @@ def max_cost(time):
     key_list = list(keys)
     plt.bar(range(len(projection_list)),val_list, tick_label = key_list)
     plt.xticks(fontsize = 6, rotation = 90)
+    plt.ylabel("Project Revenue")
+    plt.xlabel("Neighbourhood")
+    plt.title("Revenue per Neighbourhood")
     plt.show()
     print(projection_list)
 
@@ -114,9 +117,9 @@ def main():
     time_day = ['R_MF_9A_6P','R_SA_9A_6P','R_SU_9A_6P']
     time_night = ['R_MF_6P_10','R_SA_6P_10','R_SU_6P_10']
     time = time_night[0]
-    #price = 2
+    price = 2
     #get_num_of_spots_under_price(time, price)
-    get_parking_info(time)
+    #get_parking_info(time)
     #regression(3)
-    #max_cost(time)
+    revenue(time)
 main()
