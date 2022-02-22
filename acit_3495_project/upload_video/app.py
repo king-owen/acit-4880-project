@@ -9,7 +9,7 @@ app = Flask(__name__)
 mydb = mysql.connector.connect(
     host='172.6.0.2',
     user='root',
-    password='',
+    password='root',
     database='video'
 )
 #ssh = paramiko.SSHClient()
