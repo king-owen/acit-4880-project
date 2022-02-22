@@ -20,12 +20,13 @@ def input_csv():
     time_limit = []
     for i in df['T_MF_9A_6P']:
         num = str(i).split(' ')
-        #if i == 'No Time Limit' or i == 'other':
         if not num[0].isnumeric():
             time_limit.append(9999999999)
         else:
             time_limit.append(float(num[0]))
     df['T_MF_9A_6P'] = time_limit
+    df.dropna(subset = ['Geo Local Area'], inplace = True)
+
     return df
 
 def get_geo_location():
@@ -119,7 +120,7 @@ def main():
     time = time_night[0]
     price = 2
     #get_num_of_spots_under_price(time, price)
-    #get_parking_info(time)
+    get_parking_info(time)
     #regression(3)
-    revenue(time)
+    #revenue(time)
 main()
