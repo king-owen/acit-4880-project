@@ -7,7 +7,7 @@ from math import *
 import operator
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-
+from sklearn.metrics import r2_score
 def input_csv():
     df = pd.read_csv("parking-meters.csv", sep = ';')
 
@@ -83,6 +83,7 @@ def regression(time_limit):
     lin_reg.fit(X_train, y_train)
     data = pd.DataFrame({ 'T_MF_9A_6P': [time_limit]})
     predictions = lin_reg.predict(data)
+    print("R2-Square:",r2_score(y_test, predictions))
     print(predictions)
 
 def revenue(time): 
@@ -121,7 +122,7 @@ def main():
     time = time_night[0]
     price = 2
     #get_num_of_spots_under_price(time, price)
-    #get_parking_info(time)
-    regression(3)
+    get_parking_info(time)
+    #regression(3)
     #revenue(time)
 main()
