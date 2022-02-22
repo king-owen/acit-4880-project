@@ -2,46 +2,50 @@ version: '2'
 
 services:
   db:
-    #image: kingofthewestwest/mysql
-    image: ./mysql/.
+    image: kingofthewestwest/mysql
     restart: always
-    networks:
-      network1:
-        ipv4_address: 172.6.0.2
+    #links:
+    #  - "db:mysql"
+    #networks:
+    #  network1:
+    #    ipv4_address: 172.6.0.2
 
 
   upload:
-    #image: kingofthewestwest/app_py
-    image: ./upload_video/.
+    image: kingofthewestwest/app_py
     ports:
       - "5000:5000"
     restart: always
-    networks:
-      network1:
-        ipv4_address: 172.6.0.3
+    #links:
+    #  - "up:upload"
+    #networks:
+    #  network1:
+    #    ipv4_address: 172.6.0.3
 
   download:
-    #image: kingofthewestwest/streaming
-    image: ./video_streaming/.
+    image: kingofthewestwest/streaming
     ports:
       - "5050:5050"
     restart: always
-    networks:
-      network1:
-        ipv4_address: 172.6.0.4
+    #links:
+    #  - "down:download"
+    #networks:
+    #  network1:
+    #    ipv4_address: 172.6.0.4
 
   files:
-    #image: kingofthewestwest/files
-    image : ./file_system/.
+    image: kingofthewestwest/files
     restart: always
-    networks:
-      network1:
-        ipv4_address: 172.6.0.5
+    #links:
+    #  - "files:flieshare"
+    #networks:
+    #  network1:
+    #    ipv4_address: 172.6.0.5
 
-network:
+networks:
   network1:
     driver: bridge
     ipam:
       config:
         - subnet: 172.6.0.0/16
-          gateway: 172.6.0.1
+        - gateway: 172.6.0.1
