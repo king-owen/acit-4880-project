@@ -28,7 +28,7 @@ def download_file():
         #session.cwd(path)
         print(session.pwd())
         session.retrbinary("RETR " + filename, 
-        open((path + filename), "wb").write)
+        open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + filename), "wb").write)
         os.rename(filename, "./static/" + filename)
         #f = request.files['file']
         #f.save(f.filename)
