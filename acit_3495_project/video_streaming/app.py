@@ -26,6 +26,7 @@ def download_file():
     if request.method == 'GET':
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
+        print(session.pwd())
         session.retrbinary("RETR " + filename, open((path + filename), "wb").write)
         os.rename(filename, "./static/" + filename)
         #f = request.files['file']
