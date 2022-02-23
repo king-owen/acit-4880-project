@@ -5,7 +5,7 @@
          <ul id="listwithhandles">
             {% for video in videos %}
                <li>
-                  <input type="hidden" name="handles[]" value="{{ video[1] }}"/> {{video[1]}}
+                  <input type="submit" name="handles[]" value="{{ video[1] }}"/> {{video[1]}}
                </li>
             {% endfor %}
          </ul>
