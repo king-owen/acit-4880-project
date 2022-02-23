@@ -20,5 +20,6 @@ RUN pip install --no-cache-dir flask requests pyftplib mysql-connector-python
 #tail -f /dev/null
 CMD git clone https://github.com/king-owen/acit-4880-project.git && \
 mkdir -p /acit-4880-project/acit_3495_project/upload_video/upload_folder && \
+sleep 1m && \
 python acit-4880-project/acit_3495_project/upload_video/app.py && \
 tail -f /dev/null

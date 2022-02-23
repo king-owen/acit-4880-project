@@ -21,6 +21,8 @@ services:
     networks:
       default:
         ipv4_address: 172.6.0.3
+    depends_on:
+      - db
 
   download:
     image: kingofthewestwest/streaming
@@ -32,6 +34,8 @@ services:
     networks:
       default:
         ipv4_address: 172.6.0.4
+    depends_on:
+      - db
 
   files:
     image: kingofthewestwest/files
