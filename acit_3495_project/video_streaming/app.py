@@ -31,7 +31,7 @@ def download_files():
 
     mycursor.execute("SELECT * from videos;")
 
-    result = mycursor.fetchall
+    result = mycursor.fetchall()
     print(result)
     return render_template('download.html')
 
