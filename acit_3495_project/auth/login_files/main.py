@@ -14,7 +14,7 @@ def login_():
 def login_post():
     username = request.form.get('username')
     password = request.form.get('password')
-    f = open('login')
+    f = open('./login')
     data = json.load(f)
     login= False
     for i in data:
@@ -48,4 +48,4 @@ def home():
 host = '0.0.0.0'
 
 if __name__ == '__main__':
-    app.run(host, port=8081)
+    app.run(host, port=8082)
