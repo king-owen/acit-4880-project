@@ -46,6 +46,18 @@ services:
       default:
         ipv4_address: 172.6.0.5
 
+  auth:
+    image: bradleygee8/auth
+    ports:
+      - "8081:8081"
+    restart: always
+    networks:
+      default:
+        ipv4_address: 172.6.0.6
+    depends_on:
+      - upload
+      - download
+
 networks:
   default:
     driver: bridge
