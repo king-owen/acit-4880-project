@@ -41,8 +41,9 @@ def download_files():
 
     result = mycursor.fetchall()
     videos = request.form.getlist('handles[]')
+    videos = result
     
-    return render_template('download.html')
+    return render_template('download.html', videos=videos)
 
 @app.route('/downloader', methods = ['GET', 'POST'])
 def download_file():

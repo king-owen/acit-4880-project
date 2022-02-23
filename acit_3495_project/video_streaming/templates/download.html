@@ -2,8 +2,14 @@
    <body>
       <form action = "http://localhost:5001/downloader" method = "GET" 
          enctype = "multipart/form-data">
-         <input type = "file" name = "file" />
-         <input type = "download"/>
+         <ul id="listwithhandles">
+            {% for video in videos %}
+               <li>
+                  <span class="myhandle">:+:</span>
+                  <input type="hidden" name="handles[]" value="{{ video }}"/> {{video}}
+               </li>
+            {% endfor %}
+         </ul>
       </form>   
    </body>
 </html>
