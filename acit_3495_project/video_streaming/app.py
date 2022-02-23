@@ -7,12 +7,12 @@ import json
 #import wget
 app = Flask(__name__, static_folder='static')
 
-mydb = mysql.connector.connect(
-    host='172.6.0.2',
-    user='root',
-    password='root',
-    database='video'
-)
+#mydb = mysql.connector.connect(
+#    host='172.6.0.2',
+#    user='root',
+#    password='root',
+#    database='video'
+#)
 
 #mycursor = mydb.cursor()
 
@@ -48,6 +48,14 @@ def hello_world():
 def download_files():
     if check_login() != True:
         return redirect("http://172.6.0.6:8081/login")
+    
+    mydb = mysql.connector.connect(
+        host='172.6.0.2',
+        user='root',
+        password='root',
+        database='video'
+    )
+
     mycursor = mydb.cursor()
 
     mycursor.execute("SELECT * from videos;")
