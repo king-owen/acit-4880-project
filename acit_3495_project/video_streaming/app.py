@@ -27,7 +27,7 @@ print(uploads)
 
 path = '/acit-4880-project/acit_3495_project/file_system/uploads/'
 #path = os.path.join("C:", "Users", "oande", "BCIT Term 4", "ACIT 4880", "Project", "GitHub", "acit_3495_project", "file_system", "uploads")
-filename = 'WIN_20220219_15_42_17_Pro.mp4'
+#filename = 'WIN_20220219_15_42_17_Pro.mp4'
 
 @app.route('/')
 def hello_world():
@@ -52,6 +52,8 @@ def download_file():
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
         print(session.pwd())
+        print(request)
+        filename = request
         session.retrbinary("RETR " + filename, 
         open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + filename), "wb").write)
         #os.rename(filename, "/acit-4880-project/acit_3495_project/video_streaming/static/" + filename)
