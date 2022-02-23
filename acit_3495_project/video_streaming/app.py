@@ -31,7 +31,7 @@ path = '/acit-4880-project/acit_3495_project/file_system/uploads/'
 #path = os.path.join("C:", "Users", "oande", "BCIT Term 4", "ACIT 4880", "Project", "GitHub", "acit_3495_project", "file_system", "uploads")
 #filename = 'WIN_20220219_15_42_17_Pro.mp4'
 def check_login () :
-    r = requests.get(url = "http://localhost:8081/login_check").json()
+    r = requests.get(url = "http://172.6.0.6:8081/login_check").json()
     print(r)
     if r['username'] == None:
         return False
@@ -41,13 +41,13 @@ def check_login () :
 @app.route('/')
 def hello_world():
     if check_login() != True:
-        return redirect("http://localhost:8081/login")
+        return redirect("http://172.6.0.6:8081/login")
     return 'Hello, World!'
 
 @app.route('/download')
 def download_files():
     if check_login() != True:
-        return redirect("http://localhost:8081/login")
+        return redirect("http://172.6.0.6:8081/login")
     mycursor = mydb.cursor()
 
     mycursor.execute("SELECT * from videos;")
@@ -62,7 +62,7 @@ def download_files():
 @app.route('/downloader', methods = ['POST'])
 def download_file():
     if check_login() != True:
-        return redirect("http://localhost:8081/login")
+        return redirect("http://172.6.0.6:8081/login")
     if request.method == 'POST':
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
