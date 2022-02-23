@@ -4,9 +4,10 @@ import json
 
 #auth = Blueprint('auth', __name__)
 app = Flask(__name__, static_folder='static')
-
+session = {}
+session['username'] = None
 @app.route('/login')
-def login():
+def login_():
     return render_template('login.html')
 
 @app.route('/login', methods = ['POST'])
@@ -20,13 +21,30 @@ def login_post():
         key = i['username']
         value = i['password']
         if (password == value and username == key):
-            print("Congrats you logged in")
-            login = True
+            #login = True
+            session['username'] = username
+            print("login is ", session['username'])
+            return redirect('home')
     if login is False:
-        return redirect(url_for('login'))
-    
-#    return redirect(url_fir(''))
+        return redirect(url_for('login_'))
 
+@app.route('/login_check', methods = ['GET'])
+def get_login():
+    print(session)
+    return session
+    
+@app.route('/logout', methods = ["GET"])
+def logout():
+    session['username'] = None
+    return redirect(url_for('login_'))
+
+@app.route('/home')
+def home():
+    print(session['username'])
+    if session['username'] != None:
+        return render_template('home.html')
+    else:
+        return render_template('login.html')
 host = '0.0.0.0'
 
 if __name__ == '__main__':
