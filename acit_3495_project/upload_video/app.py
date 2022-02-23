@@ -42,7 +42,8 @@ def upload_file():
         session.storbinary(("STOR " + f.filename), file_serve)
         session.quit()
         mycursor = mydb.cursor()
-        mycursor.execute("INSERT INTO videos (name, path) VALUES (%s, %s)", list(f.filename), "/acit-4880-project/acit_3495_project/file_system/uploads/")
+        val = (f.filename, "/acit-4880-project/acit_3495_project/file_system/uploads/")
+        mycursor.execute("INSERT INTO videos (name, path) VALUES (%s, %s)", val)
         mydb.commit()
 
         #ssh.connect('root@172.18.0.3')
