@@ -71,7 +71,7 @@ def download_file():
 
         #return "Successful download"
     #print(os.path.join(path, filename))
-    return render_template('downloader.html', filename=file.filename, title="video")
+    return render_template('downloader.html', filename=file, title="video")
 
 
 host = '0.0.0.0'
