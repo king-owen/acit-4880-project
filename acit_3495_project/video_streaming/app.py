@@ -48,6 +48,7 @@ def download_files():
 
 @app.route('/downloader', methods = ['GET', 'POST'])
 def download_file():
+    print(request)
     if request.method == 'POST':
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
