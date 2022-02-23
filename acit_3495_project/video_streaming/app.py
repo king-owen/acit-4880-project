@@ -52,8 +52,9 @@ def download_file():
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
         #print(session.pwd())
-        print(request.get_json())
-        file = request.files['file']
+        print(request)
+        file = request.files['handles[]']
+        print(file.filename)
         session.retrbinary("RETR " + file.filename, 
         open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + file.filename), "wb").write)
         #os.rename(filename, "/acit-4880-project/acit_3495_project/video_streaming/static/" + filename)
