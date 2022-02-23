@@ -12,11 +12,11 @@ mydb = mysql.connector.connect(
     database='video'
 )
 
-mycursor = mydb.cursor()
+#mycursor = mydb.cursor()
 
-mycursor.execute("SELECT * from videos;")
+#mycursor.execute("SELECT * from videos;")
 
-results = mycursor.fetchall()
+#results = mycursor.fetchall()
 
 #print(results)
 
