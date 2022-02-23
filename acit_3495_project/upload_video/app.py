@@ -23,7 +23,7 @@ uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_fold
 #print(os.path.dirname(os.path.realpath(__file__)))
 print(uploads)
 def check_login () :
-    r = requests.get(url = "http://localhost:8081/login_check").json()
+    r = requests.get(url = "http://172.6.0.6:8081/login_check").json()
     print(r)
     if r['username'] == None:
         return False
