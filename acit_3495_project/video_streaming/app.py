@@ -1,8 +1,16 @@
 import os
 from flask import Flask, render_template, request
 import ftplib
+import mysql.connector
 #import wget
 app = Flask(__name__, static_folder='static')
+
+mydb = mysql.connector.connect(
+    host='172.6.0.2',
+    user='root',
+    password='root',
+    database='video'
+)
 
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
@@ -19,6 +27,12 @@ def hello_world():
 
 @app.route('/download')
 def download_files():
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT * from videos;")
+
+    result = mycursor.fetchall
+    print(result)
     return render_template('download.html')
 
 @app.route('/downloader', methods = ['GET', 'POST'])
