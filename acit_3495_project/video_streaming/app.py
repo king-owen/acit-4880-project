@@ -18,6 +18,8 @@ mycursor.execute("SELECT * from videos;")
 
 result = mycursor.fetchall()
 
+print(result)
+
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
 #print(os.path.dirname(os.path.realpath(__file__)))
