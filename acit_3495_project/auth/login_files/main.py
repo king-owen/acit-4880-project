@@ -21,7 +21,7 @@ def login_post():
         key = i['username']
         value = i['password']
         if (password == value and username == key):
-            #login = True
+            login = True
             session['username'] = username
             print("login is ", session['username'])
             return redirect('home')
