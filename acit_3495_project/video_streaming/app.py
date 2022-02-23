@@ -55,7 +55,7 @@ def download_file():
         print(request.args)
         file = request.files['file']
         session.retrbinary("RETR " + file.filename, 
-        open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + filename), "wb").write)
+        open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + file.filename), "wb").write)
         #os.rename(filename, "/acit-4880-project/acit_3495_project/video_streaming/static/" + filename)
         #f = request.files['file']
         #f.save(f.filename)
@@ -68,8 +68,8 @@ def download_file():
         #wget.download(link)
 
         #return "Successful download"
-    print(os.path.join(path, filename))
-    return render_template('downloader.html', filename=filename, title="video")
+    #print(os.path.join(path, filename))
+    return render_template('downloader.html', filename=file.filename, title="video")
 
 
 host = '0.0.0.0'
