@@ -46,7 +46,7 @@ def download_files():
     
     return render_template('download.html', videos=videos)
 
-@app.route('/downloader', methods = ['GET', 'POST'])
+@app.route('/downloader', methods = ['POST'])
 def download_file():
     print("here")
     if request.method == 'POST':
