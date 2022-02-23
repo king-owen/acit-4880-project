@@ -5,7 +5,6 @@
          <ul id="listwithhandles">
             {% for video in videos %}
                <li>
-                  <span class="myhandle">-</span>
                   <input type="hidden" name="handles[]" value="{{ video[1] }}"/> {{video[1]}}
                </li>
             {% endfor %}
