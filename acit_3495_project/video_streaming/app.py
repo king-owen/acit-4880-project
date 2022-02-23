@@ -1,17 +1,33 @@
 import os
 from flask import Flask, render_template, request
 import ftplib
+import mysql.connector
 #import wget
 app = Flask(__name__, static_folder='static')
+
+mydb = mysql.connector.connect(
+    host='172.6.0.2',
+    user='root',
+    password='root',
+    database='video'
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * from videos;")
+
+results = mycursor.fetchall()
+
+#print(results)
 
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
 #print(os.path.dirname(os.path.realpath(__file__)))
-print(uploads)
+#print(uploads)
 
 path = '/acit-4880-project/acit_3495_project/file_system/uploads/'
 #path = os.path.join("C:", "Users", "oande", "BCIT Term 4", "ACIT 4880", "Project", "GitHub", "acit_3495_project", "file_system", "uploads")
-filename = 'WIN_20220219_15_42_17_Pro.mp4'
+#filename = 'WIN_20220219_15_42_17_Pro.mp4'
 
 @app.route('/')
 def hello_world():
@@ -19,16 +35,29 @@ def hello_world():
 
 @app.route('/download')
 def download_files():
-    return render_template('download.html')
+    mycursor = mydb.cursor()
 
-@app.route('/downloader', methods = ['GET', 'POST'])
+    mycursor.execute("SELECT * from videos;")
+
+    result = mycursor.fetchall()
+    videos = request.form.getlist('handles[]')
+    videos = result
+    print(videos)
+    
+    return render_template('download.html', videos=videos)
+
+@app.route('/downloader', methods = ['POST'])
 def download_file():
-    if request.method == 'GET':
+    print("here")
+    if request.method == 'POST':
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
-        print(session.pwd())
-        session.retrbinary("RETR " + filename, 
-        open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + filename), "wb").write)
+        #print(session.pwd())
+        print(request)
+        file = request.form.get('handles[]')
+        print(file)
+        session.retrbinary("RETR " + file, 
+        open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + file), "wb").write)
         #os.rename(filename, "/acit-4880-project/acit_3495_project/video_streaming/static/" + filename)
         #f = request.files['file']
         #f.save(f.filename)
@@ -41,8 +70,8 @@ def download_file():
         #wget.download(link)
 
         #return "Successful download"
-    print(os.path.join(path, filename))
-    return render_template('downloader.html', filename=filename, title="video")
+    #print(os.path.join(path, filename))
+    return render_template('downloader.html', filename=file.filename, title="video")
 
 
 host = '0.0.0.0'
