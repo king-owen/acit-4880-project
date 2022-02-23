@@ -18,12 +18,12 @@ mycursor.execute("SELECT * from videos;")
 
 results = mycursor.fetchall()
 
-print(results)
+#print(results)
 
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
 #print(os.path.dirname(os.path.realpath(__file__)))
-print(uploads)
+#print(uploads)
 
 path = '/acit-4880-project/acit_3495_project/file_system/uploads/'
 #path = os.path.join("C:", "Users", "oande", "BCIT Term 4", "ACIT 4880", "Project", "GitHub", "acit_3495_project", "file_system", "uploads")
@@ -51,7 +51,7 @@ def download_file():
     if request.method == 'POST':
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
         #session.cwd(path)
-        print(session.pwd())
+        #print(session.pwd())
         print(request.args)
         file = request.files['file']
         session.retrbinary("RETR " + file.filename, 
