@@ -1,12 +1,12 @@
 <html>
    <body>
-      <form action = "http://localhost:5001/downloader" method = "GET" 
+      <form action = "http://localhost:5050/downloader" method = "GET" 
          enctype = "multipart/form-data">
          <ul id="listwithhandles">
             {% for video in videos %}
                <li>
-                  <span class="myhandle">:+:</span>
-                  <input type="hidden" name="handles[]" value="{{ video }}"/> {{video}}
+                  <span class="myhandle">-</span>
+                  <input type="hidden" name="handles[]" value="{{ video[1] }}"/> {{video[1]}}
                </li>
             {% endfor %}
          </ul>

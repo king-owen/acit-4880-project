@@ -16,9 +16,9 @@ mycursor = mydb.cursor()
 
 mycursor.execute("SELECT * from videos;")
 
-result = mycursor.fetchall()
+results = mycursor.fetchall()
 
-print(result)
+print(results)
 
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
@@ -42,6 +42,7 @@ def download_files():
     result = mycursor.fetchall()
     videos = request.form.getlist('handles[]')
     videos = result
+    print(videos)
     
     return render_template('download.html', videos=videos)
 
