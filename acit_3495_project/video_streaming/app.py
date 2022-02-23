@@ -12,6 +12,12 @@ mydb = mysql.connector.connect(
     database='video'
 )
 
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * from videos;")
+
+result = mycursor.fetchall()
+
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
 #print(os.path.dirname(os.path.realpath(__file__)))
@@ -32,7 +38,8 @@ def download_files():
     mycursor.execute("SELECT * from videos;")
 
     result = mycursor.fetchall()
-    print(result)
+    videos = request.form.getlist('handles[]')
+    
     return render_template('download.html')
 
 @app.route('/downloader', methods = ['GET', 'POST'])
