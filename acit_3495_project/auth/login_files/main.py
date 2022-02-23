@@ -14,7 +14,7 @@ def login_():
 def login_post():
     username = request.form.get('username')
     password = request.form.get('password')
-    f = open('./login')
+    f = open('//acit-4880-project/acit_3495_project/auth/login_files/login')
     data = json.load(f)
     login= False
     for i in data:
