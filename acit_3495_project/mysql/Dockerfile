@@ -4,7 +4,7 @@ RUN apt-get update
 RUN apt-get install -y mysql-server
 
 EXPOSE 3306
-#RUN
+
 CMD apt-get update && \
 apt install -y sudo vim && \
 awk '!/bind-address/' /etc/mysql/mysql.conf.d/mysqld.cnf > temp && mv temp /etc/mysql/mysql.conf.d/mysqld.cnf && \
@@ -16,9 +16,3 @@ mysql video -e "GRANT ALL ON video.* TO 'root'@'172.6.0.3' IDENTIFIED BY 'root';
 mysql video -e "GRANT ALL ON video.* TO 'root'@'172.6.0.4' IDENTIFIED BY 'root';" && \
 mysql video -e "FLUSH PRIVILEGES;" && \ 
 tail -f /dev/null
-#ENV MYSQL_ROOT_PASSWORD video
-#ENV MYSQL_DATABASE video
-#ENV MYSQL_USER video
-#ENV MYSQL_PASSWORD video
-
-#-p${MYSQL_ROOT_PASSWORD}

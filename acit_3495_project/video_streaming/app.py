@@ -48,6 +48,7 @@ def hello_world():
 def download_files():
     if check_login() != True:
         return redirect("http://172.6.0.6:8081/login")
+
     mycursor = mydb.cursor()
 
     mycursor.execute("SELECT * from videos;")
@@ -65,26 +66,13 @@ def download_file():
         return redirect("http://172.6.0.6:8081/login")
     if request.method == 'POST':
         session = ftplib.FTP('172.6.0.5', 'root', 'password')
-        #session.cwd(path)
-        #print(session.pwd())
         print(request)
         file = request.form.get('handles[]')
         print(file)
         session.retrbinary("RETR " + file, 
         open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + file), "wb").write)
-        #os.rename(filename, "/acit-4880-project/acit_3495_project/video_streaming/static/" + filename)
-        #f = request.files['file']
-        #f.save(f.filename)
-        #print(f.filename)
-        #f.save(os.path.join(uploads, f.filename))
-        #session.storbinary(("STOR "+f.filename), f)
         session.quit()
 
-        #link = 'ftp://os.path.join("C:", "Users", "oande", "BCIT Term 4", "ACIT 4880", "Project", "GitHub", "acit_3495_project", "file_system", "uploads", "Salaries.csv)'
-        #wget.download(link)
-
-        #return "Successful download"
-    #print(os.path.join(path, filename))
     return render_template('downloader.html', filename=file, title=file)
 
 

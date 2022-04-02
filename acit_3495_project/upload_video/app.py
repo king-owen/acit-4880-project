@@ -4,8 +4,6 @@ import ftplib
 import mysql.connector
 import requests
 import json
-#import paramiko
-#from scp import SCPClient
 app = Flask(__name__)
 
 mydb = mysql.connector.connect(
@@ -14,9 +12,6 @@ mydb = mysql.connector.connect(
     password='root',
     database='video'
 )
-#ssh = paramiko.SSHClient()
-#ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-#session = ftplib.FTP('0.0.0.0:2121', 'root', 'password')
 
 
 uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_folder')
@@ -59,12 +54,6 @@ def upload_file():
         val = (f.filename, "/acit-4880-project/acit_3495_project/file_system/uploads/")
         mycursor.execute("INSERT INTO videos (name, path) VALUES (%s, %s)", val)
         mydb.commit()
-
-        #ssh.connect('root@172.18.0.3')
-        #with SCPClient(ssh.get_transport()) as scp:
-        #    scp.put(os.path.join(uploads, f.filename), os.path.join('uploads/', f.filename))
-        
-        #request.post('172.18.0.2/uploads', files=('/upload_folder/' + f.filename))
 
         return 'successful upload'
 
