@@ -10,7 +10,13 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
-
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+from sklearn.neighbors import KNeighborsClassifier
+import warnings
+from sklearn.exceptions import DataConversionWarning
 def input_csv():
     df = pd.read_csv("cars.csv", sep = ',')
    
@@ -25,8 +31,13 @@ def input_csv():
         df[item] = return_list[0]
         keys[item] = return_list[1]
        # keys[item]= return_dict
-    
-    print(df)
+    price_list = []
+    for item in df['price_usd']:
+        if item > 10000:
+            price_list.append(1)
+        else:
+            price_list.append(0)
+    df['under_10k'] = price_list
     return df
 
 def convert_to_dict(file_input, column_name):
@@ -61,8 +72,8 @@ def get_key(my_dict,val):
 
 def decision_tree_accuracy():
     dataset = input_csv()
+    dataset = dataset[['model_name', 'odometer_value', 'year_produced','under_10k']]
     X = dataset.iloc[:, :-1].values
-    print(X)
     y = dataset.iloc[:, -1].values
     sc = StandardScaler()
     classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
@@ -72,21 +83,42 @@ def decision_tree_accuracy():
     classifier.fit(X_train, y_train)
     y_pred = classifier.predict(X_test)
     score = accuracy_score(y_test, y_pred)
-    print(score)
+    print("Decision Tree Accuracy", score)
 
 def decision_tree_predict():
     dataset=input_csv()
     X = dataset[['model_name', 'odometer_value', 'year_produced']].values
     y = dataset[['price_usd']].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.4, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
     y_train=y_train.astype('int')
     classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
     classifier.fit(X_train, y_train)
     car_info = [[1, 19000,2012]]
     cost=classifier.predict(car_info)
-    print(cost)
+    print('Decision Tree Prediction of cost with this info', car_info,'cost will be :', cost)
+
+def knn():
+    dataset=input_csv()
+    feature_set = ['model_name', 'odometer_value', 'year_produced']
+    features = dataset[feature_set] 
+    target = dataset.under_10k
+    feature_train,feature_test, target_train, target_test = train_test_split(features, target, test_size=0.3, random_state=1)
+    model = KNeighborsClassifier(n_neighbors=4)
+    model.fit(feature_train,target_train) 
+    predictions = model.predict(feature_test)
+    print("Accuracy:",accuracy_score(target_test, predictions))
+# Calculate model precision
+    print("Precision:",precision_score(target_test, predictions))
+# Calculate model recall
+    print("Recall:",recall_score(target_test, predictions))
+# Calculate model f1 score
+    print("F1-Score:",f1_score(target_test, predictions))
     
+
 def main():
     decision_tree_predict()
+    decision_tree_accuracy()
+    knn()
+
 
 main()
