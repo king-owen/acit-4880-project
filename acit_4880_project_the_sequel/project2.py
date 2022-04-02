@@ -107,11 +107,8 @@ def knn():
     model.fit(feature_train,target_train) 
     predictions = model.predict(feature_test)
     print("Accuracy:",accuracy_score(target_test, predictions))
-# Calculate model precision
     print("Precision:",precision_score(target_test, predictions))
-# Calculate model recall
     print("Recall:",recall_score(target_test, predictions))
-# Calculate model f1 score
     print("F1-Score:",f1_score(target_test, predictions))
     
 
