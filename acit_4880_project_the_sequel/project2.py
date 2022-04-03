@@ -17,7 +17,11 @@ from sklearn.metrics import f1_score
 from sklearn.neighbors import KNeighborsClassifier
 import warnings
 from sklearn.exceptions import DataConversionWarning
-def input_csv():
+from sklearn.metrics import plot_confusion_matrix
+
+
+
+def input_csv(for_algo):
     df = pd.read_csv("cars.csv", sep = ',')
    
     keys = {}
@@ -25,12 +29,12 @@ def input_csv():
    
     df = df.drop(df[df["manufacturer_name"] != 'Subaru'].index)
     df= df.drop(['manufacturer_name','feature_0','feature_1','feature_2','feature_3','feature_4','feature_5','feature_6','feature_7','feature_8','feature_9', "location_region", "number_of_photos", "up_counter"],axis=1)
+    if for_algo == False:
+        return df
     for item in convert_list:
         return_list = convert_to_dict(df,item)
-#        check(df[item], return_list[0],return_list[1])
         df[item] = return_list[0]
         keys[item] = return_list[1]
-       # keys[item]= return_dict
     price_list = []
     for item in df['price_usd']:
         if item > 10000:
@@ -39,6 +43,41 @@ def input_csv():
             price_list.append(0)
     df['under_10k'] = price_list
     return df
+
+def get_car_types():
+    input = input_csv(False)
+    car_list = []
+    for car_type in input['model_name']:
+        if car_type not in car_list:
+            car_list.append(car_type)
+    return car_list
+
+def get_car_info():
+    '''get mean, median, min, max of parking '''
+    car_list = get_car_types()
+    mm_list = []
+    for car in car_list:
+        input = input_csv(False)
+        input = input.drop(input[input["model_name"] != car].index)
+        mm_list.append([input['price_usd'].mean().round(2),input['price_usd'].median(), input['price_usd'].min().round(2), input['price_usd'].max()])
+    data = pd.DataFrame(mm_list, index = car_list, columns = ['Mean', 'Median', 'Min', 'Max'])
+    print(data)
+
+def get_inventory():
+    input = input_csv(False)
+    inventory={}
+    for car in input['model_name']:
+        if car not in inventory:
+            inventory[car] = 1
+        else: 
+            inventory[car] +=1
+    inventory_numbers = dict( sorted(inventory.items(), key=operator.itemgetter(1),reverse=True))
+    keys = inventory.keys()
+    vals = inventory.values()
+    val_list = list(vals)
+    key_list = list(keys)
+    plt.bar(range(len(inventory_numbers)),val_list, tick_label = key_list)
+    plt.show()
 
 def convert_to_dict(file_input, column_name):
     type_dict ={}
@@ -50,8 +89,8 @@ def convert_to_dict(file_input, column_name):
             car_list.append(type_dict[car_type])
             counter += 1
         else:
-            car_list.append(type_dict[car_type])
-    #file_input[column_name] = car_list    
+            car_list.append(type_dict[car_type]) 
+    print(type_dict)  
     return [car_list, type_dict]
 
 def check(df,input,key):
@@ -71,7 +110,7 @@ def get_key(my_dict,val):
     return "key doesn't exist"
 
 def decision_tree_accuracy():
-    dataset = input_csv()
+    dataset = input_csv(True)
     dataset = dataset[['model_name', 'odometer_value', 'year_produced','under_10k']]
     X = dataset.iloc[:, :-1].values
     y = dataset.iloc[:, -1].values
@@ -84,9 +123,15 @@ def decision_tree_accuracy():
     y_pred = classifier.predict(X_test)
     score = accuracy_score(y_test, y_pred)
     print("Decision Tree Accuracy", score)
+    print("Precision:",precision_score(y_test, y_pred))
+    print("Recall:",recall_score(y_test, y_pred))
+    print("F1-Score:",f1_score(y_test, y_pred))
+    y_pred = classifier.predict(X_test)
+    cm = confusion_matrix(y_test, y_pred)
+    print(cm)
 
 def decision_tree_predict():
-    dataset=input_csv()
+    dataset=input_csv(True)
     X = dataset[['model_name', 'odometer_value', 'year_produced']].values
     y = dataset[['price_usd']].values
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
@@ -97,25 +142,40 @@ def decision_tree_predict():
     cost=classifier.predict(car_info)
     print('Decision Tree Prediction of cost with this info', car_info,'cost will be :', cost)
 
+def knn_predict():
+    dataset=input_csv(True)
+    X = dataset[['model_name', 'odometer_value', 'year_produced']].values
+    y = dataset[['price_usd']].values
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    y_train=y_train.astype('int')
+    classifier = KNeighborsClassifier(n_neighbors=4)
+    classifier.fit(X_train, y_train.ravel())
+    car_info = [[1, 19000,2012]]
+    cost=classifier.predict(car_info)
+    print('KNN Prediction of cost with this info', car_info,'cost will be :', cost)
+
 def knn():
-    dataset=input_csv()
+    dataset=input_csv(True)
     feature_set = ['model_name', 'odometer_value', 'year_produced']
     features = dataset[feature_set] 
     target = dataset.under_10k
     feature_train,feature_test, target_train, target_test = train_test_split(features, target, test_size=0.3, random_state=1)
-    model = KNeighborsClassifier(n_neighbors=4)
+    model = KNeighborsClassifier(n_neighbors=5)
     model.fit(feature_train,target_train) 
     predictions = model.predict(feature_test)
     print("Accuracy:",accuracy_score(target_test, predictions))
     print("Precision:",precision_score(target_test, predictions))
     print("Recall:",recall_score(target_test, predictions))
     print("F1-Score:",f1_score(target_test, predictions))
-    
+    cm = confusion_matrix(target_test, predictions)
+    print(cm)
 
 def main():
     decision_tree_predict()
     decision_tree_accuracy()
-    knn()
-
+    #knn()
+    #knn_predict()
+    #get_car_info()
+    #get_inventory()
 
 main()
