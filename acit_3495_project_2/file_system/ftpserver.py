@@ -35,7 +35,7 @@ def main():
     # Optionally specify range of ports to use for passive connections.
     #handler.passive_ports = range(60000, 65535)
 
-    address = ('', FTP_PORT)
+    address = ('load-ftp', FTP_PORT)
     server = FTPServer(address, handler)
 
     server.max_cons = 256
