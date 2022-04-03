@@ -48,11 +48,11 @@ def upload_file():
         #f.save(f.filename)
         print(f.filename)
         f.save(os.path.join(uploads, f.filename))
-        file_serve = open("/acit-4880-project/acit_3495_project/upload_video/upload_folder/" + f.filename, "rb")
+        file_serve = open("/acit-4880-project/acit_3495_project_2/upload_video/upload_folder/" + f.filename, "rb")
         session.storbinary(("STOR " + f.filename), file_serve)
         session.quit()
         mycursor = mydb.cursor()
-        val = (f.filename, "/acit-4880-project/acit_3495_project/file_system/uploads/")
+        val = (f.filename, "/acit-4880-project/acit_3495_project_2/file_system/uploads/")
         mycursor.execute("INSERT INTO videos (name, path) VALUES (%s, %s)", val)
         mydb.commit()
 

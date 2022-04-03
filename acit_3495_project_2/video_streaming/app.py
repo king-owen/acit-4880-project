@@ -28,7 +28,7 @@ uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_fold
 #print(os.path.dirname(os.path.realpath(__file__)))
 #print(uploads)
 
-path = '/acit-4880-project/acit_3495_project/file_system/uploads/'
+path = '/acit-4880-project/acit_3495_project_2/file_system/uploads/'
 #path = os.path.join("C:", "Users", "oande", "BCIT Term 4", "ACIT 4880", "Project", "GitHub", "acit_3495_project", "file_system", "uploads")
 #filename = 'WIN_20220219_15_42_17_Pro.mp4'
 def check_login () :
@@ -71,7 +71,7 @@ def download_file():
         file = request.form.get('handles[]')
         print(file)
         session.retrbinary("RETR " + file, 
-        open(("/acit-4880-project/acit_3495_project/video_streaming/static/" + file), "wb").write)
+        open(("/acit-4880-project/acit_3495_project_2/video_streaming/static/" + file), "wb").write)
         session.quit()
 
     return render_template('downloader.html', filename=file, title=file)
