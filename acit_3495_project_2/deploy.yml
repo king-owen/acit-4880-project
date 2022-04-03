@@ -137,10 +137,10 @@ kind: Service
 metadata:
   name: load-ftp
 spec:
-  type: LoadBalancer
+  #type: LoadBalancer
   ports:
   - port: 21
-    targetPort: 21
+    #targetPort: 21
   selector:
     app: ftp
 ---

@@ -33,7 +33,7 @@ def main():
     handler.banner = "pyftpdlib based ftpd ready."
 
     # Optionally specify range of ports to use for passive connections.
-    #handler.passive_ports = range(60000, 65535)
+    handler.passive_ports = range(60000, 65535)
 
     address = ('0.0.0.0', FTP_PORT)
     server = FTPServer(address, handler)
