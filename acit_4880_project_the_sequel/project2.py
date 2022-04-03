@@ -90,7 +90,6 @@ def convert_to_dict(file_input, column_name):
             counter += 1
         else:
             car_list.append(type_dict[car_type]) 
-    print(type_dict)  
     return [car_list, type_dict]
 
 def check(df,input,key):
@@ -138,7 +137,7 @@ def decision_tree_predict():
     y_train=y_train.astype('int')
     classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
     classifier.fit(X_train, y_train)
-    car_info = [[1, 19000,2012]]
+    car_info = [[1, 132000,2012]]
     cost=classifier.predict(car_info)
     print('Decision Tree Prediction of cost with this info', car_info,'cost will be :', cost)
 
@@ -148,13 +147,13 @@ def knn_predict():
     y = dataset[['price_usd']].values
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
     y_train=y_train.astype('int')
-    classifier = KNeighborsClassifier(n_neighbors=4)
+    classifier = KNeighborsClassifier(n_neighbors=1)
     classifier.fit(X_train, y_train.ravel())
-    car_info = [[1, 19000,2012]]
+    car_info = [[1, 132000,2012]]
     cost=classifier.predict(car_info)
     print('KNN Prediction of cost with this info', car_info,'cost will be :', cost)
 
-def knn():
+def knn_accuracy():
     dataset=input_csv(True)
     feature_set = ['model_name', 'odometer_value', 'year_produced']
     features = dataset[feature_set] 
@@ -170,11 +169,13 @@ def knn():
     cm = confusion_matrix(target_test, predictions)
     print(cm)
 
+def random_forest():
+    pass
 def main():
-    decision_tree_predict()
-    decision_tree_accuracy()
-    #knn()
-    #knn_predict()
+    #decision_tree_predict()
+    #decision_tree_accuracy()
+    knn_accuracy()
+    knn_predict()
     #get_car_info()
     #get_inventory()
 
