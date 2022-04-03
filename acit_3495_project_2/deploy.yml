@@ -111,6 +111,7 @@ metadata:
   name: load-mysql
 spec:
   type: LoadBalancer
+  loadBalancerIP: 172.68.0.2
   ports:
   - port: 3306
     targetPort: 3306

@@ -8,7 +8,7 @@ import json
 app = Flask(__name__, static_folder='static')
 
 mydb = mysql.connector.connect(
-    host='localhost',
+    host='172.68.0.2',
     #port='3307',
     user='root',
     password='root',
