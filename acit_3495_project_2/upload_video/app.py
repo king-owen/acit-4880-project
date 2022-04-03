@@ -43,17 +43,18 @@ def upload_file():
     if check_login() != True:
         return redirect("http://load-auth:8081/login")
     if request.method == 'POST':
-        session = ftplib.FTP('load-ftp', 'root', 'password')
+        session = ftplib.FTP('http://load-ftp', 'root', 'password')
         f = request.files['file']
         #f.save(f.filename)
 
-#f.filename is not returning anything
+#session notconnection, load-ftp is the issue
 
         print(f)
         f.save(os.path.join(uploads, f.filename))
         file_serve = open("/acit-4880-project/acit_3495_project_2/upload_video/upload_folder/" + f.filename, "rb")
-        #session.storbinary(("STOR " + f.filename),
-        session.storbinary(("STOR " + "WIN_20220219_15_42_17_Pro.mp4"), 
+        session.storbinary(("STOR " + f.filename),
+        #session.storbinary(("STOR " + 
+        #"WIN_20220219_15_42_17_Pro.mp4"), 
         file_serve)
         session.quit()
         mycursor = mydb.cursor()
