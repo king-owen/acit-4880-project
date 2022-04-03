@@ -105,16 +105,29 @@ spec:
           - containerPort: 5050
 ---
 #service for mysql
+#apiVersion: v1
+#kind: Service
+#metadata:
+  #name: load-mysql
+#spec:
+#  type: LoadBalancer
+#  #loadBalancerIP: 172.68.0.2
+#  ports:
+#  - port: 3306
+#    targetPort: 3306
+#  selector:
+#    app: mysql
+
 apiVersion: v1
 kind: Service
 metadata:
   name: load-mysql
 spec:
-  type: LoadBalancer
-  loadBalancerIP: 172.68.0.2
+  #type: LoadBalancer
+  #loadBalancerIP: 172.68.0.2
   ports:
   - port: 3306
-    targetPort: 3306
+    #targetPort: 3306
   selector:
     app: mysql
 ---
