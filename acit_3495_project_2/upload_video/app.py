@@ -46,7 +46,7 @@ def upload_file():
         session = ftplib.FTP('load-ftp', 'root', 'password')
         f = request.files['file']
         #f.save(f.filename)
-        print(f.filename)
+        print(f)
         f.save(os.path.join(uploads, f.filename))
         file_serve = open("/acit-4880-project/acit_3495_project_2/upload_video/upload_folder/" + f.filename, "rb")
         session.storbinary(("STOR " + f.filename), 
