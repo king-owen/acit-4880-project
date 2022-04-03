@@ -19,7 +19,7 @@ uploads = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'upload_fold
 #print(os.path.dirname(os.path.realpath(__file__)))
 print(uploads)
 def check_login () :
-    r = requests.get(url = "http://localhost:8081/login_check").json()
+    r = requests.get(url = "http://load-auth:8081/login_check").json()
     print(r)
     if r['username'] == None:
         return False
@@ -29,21 +29,21 @@ def check_login () :
 @app.route('/')
 def hello_world():
     if check_login() != True:
-        return redirect("http://localhost:8081/login")
+        return redirect("http://load-auth:8081/login")
     return 'Hello, World!'
 
 @app.route('/upload')
 def upload_files():
     if check_login() != True:
-        return redirect("http://localhost:8081/login")
+        return redirect("http://load-auth:8081/login")
     return render_template('upload.html')
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
     if check_login() != True:
-        return redirect("http://localhost:8081/login")
+        return redirect("http://load-auth:8081/login")
     if request.method == 'POST':
-        session = ftplib.FTP('172.6.0.5', 'root', 'password')
+        session = ftplib.FTP('load-ftp', 'root', 'password')
         f = request.files['file']
         #f.save(f.filename)
         print(f.filename)
