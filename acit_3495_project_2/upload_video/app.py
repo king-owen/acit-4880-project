@@ -49,7 +49,8 @@ def upload_file():
         print(f.filename)
         f.save(os.path.join(uploads, f.filename))
         file_serve = open("/acit-4880-project/acit_3495_project_2/upload_video/upload_folder/" + f.filename, "rb")
-        session.storbinary(("STOR " + f.filename), file_serve)
+        session.storbinary(("STOR " + f.filename), 
+        file_serve)
         session.quit()
         mycursor = mydb.cursor()
         val = (f.filename, "/acit-4880-project/acit_3495_project_2/file_system/uploads/")
