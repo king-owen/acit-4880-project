@@ -47,7 +47,7 @@ def upload_file():
         f = request.files['file']
         #f.save(f.filename)
 
-#session notconnection, load-ftp is the issue
+#session notconnection, load-ftp is the issue, look into what ip fpt server has
 
         print(f)
         f.save(os.path.join(uploads, f.filename))

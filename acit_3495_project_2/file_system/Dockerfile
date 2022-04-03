@@ -6,6 +6,7 @@ RUN apt install -y vim
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir flask
 RUN pip install requests pyftplib
+EXPOSE 20
 EXPOSE 21
 
 CMD git clone https://github.com/king-owen/acit-4880-project.git && \
