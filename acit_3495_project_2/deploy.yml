@@ -112,7 +112,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 3307
+  - port: 3306
     targetPort: 3306
   selector:
     app: mysql

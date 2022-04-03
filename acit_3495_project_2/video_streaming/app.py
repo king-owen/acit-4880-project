@@ -9,7 +9,7 @@ app = Flask(__name__, static_folder='static')
 
 mydb = mysql.connector.connect(
     host='localhost',
-    port='3307',
+    #port='3307',
     user='root',
     password='root',
     database='video'
