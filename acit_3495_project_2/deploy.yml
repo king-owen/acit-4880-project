@@ -68,7 +68,7 @@ kind: Deployment
 metadata:
   name: upload-deploy
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: upload
@@ -89,7 +89,7 @@ kind: Deployment
 metadata:
   name: stream-deploy
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: stream
