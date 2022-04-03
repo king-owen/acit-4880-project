@@ -1,0 +1,170 @@
+---
+#sets up the mysql server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: kingofthewestwest/mysql_2
+        ports:
+          - containerPort: 3306
+---
+#sets uo the ftp server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftp-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftp
+  template:
+    metadata:
+      labels:
+        app: ftp
+    spec:
+      containers:
+      - name: ftp
+        image: kingofthewestwest/file_2
+        ports:
+          - containerPort: 21
+---
+#sets up the auth server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - name: auth
+        image: kingofthewestwest/auth_2
+        ports:
+          - containerPort: 8081
+---
+#sets up the upload server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upload-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: upload
+  template:
+    metadata:
+      labels:
+        app: upload
+    spec:
+      containers:
+      - name: upload
+        image: kingofthewestwest/upload_2
+        ports:
+          - containerPort: 5000
+---
+#sets up the download server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stream-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: stream
+  template:
+    metadata:
+      labels:
+        app: stream
+    spec:
+      containers:
+      - name: stream
+        image: kingofthewestwest/stream_2
+        ports:
+          - containerPort: 5050
+---
+#service for mysql
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-mysql
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3307
+    targetPort: 3306
+  selector:
+    app: mysql
+---
+#service for ftp
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-ftp
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 21
+    targetPort: 21
+  selector:
+    app: ftp
+---
+#service for auth
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-auth
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8081
+    targetPort: 8081
+  selector:
+    app: auth
+---
+#service for upload
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-upload
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: upload
+---
+#service for downloadload
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-stream
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5050
+    targetPort: 5050
+  selector:
+    app: stream

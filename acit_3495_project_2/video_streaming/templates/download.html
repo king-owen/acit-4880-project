@@ -1,0 +1,14 @@
+<html>
+   <body>
+      <form action = "http://localhost:5050/downloader" method = "POST" 
+         enctype = "multipart/form-data">
+         <ul id="listwithhandles">
+            {% for video in videos %}
+               <li>
+                  <input type="submit" name="handles[]" value="{{ video[1] }}"/>
+               </li>
+            {% endfor %}
+         </ul>
+      </form>   
+   </body>
+</html>
