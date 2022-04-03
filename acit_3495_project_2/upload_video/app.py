@@ -46,9 +46,9 @@ def upload_file():
     if request.method == 'POST':
         session = ftplib.FTP('load-ftp', 'root', 'password')
         f = request.files['file']
-        #f.save(f.filename)
+        f.save(f.filename)
 
-#correct ftp but filename not properly being passed
+#correct ftp but filename not properly being passed or just not accepted
 
         print(f)
         f.save(os.path.join(uploads, f.filename))
