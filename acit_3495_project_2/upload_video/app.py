@@ -40,6 +40,7 @@ def upload_files():
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
+    print(request.method)
     if check_login() != True:
         return redirect("http://load-auth:8081/login")
     if request.method == 'POST':
