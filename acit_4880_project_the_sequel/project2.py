@@ -18,7 +18,7 @@ from sklearn.neighbors import KNeighborsClassifier
 import warnings
 from sklearn.exceptions import DataConversionWarning
 from sklearn.metrics import plot_confusion_matrix
-
+from sklearn.ensemble import RandomForestClassifier
 
 
 def input_csv(for_algo):
@@ -135,7 +135,7 @@ def decision_tree_predict():
     y = dataset[['price_usd']].values
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
     y_train=y_train.astype('int')
-    classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
+    classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 10)
     classifier.fit(X_train, y_train)
     car_info = [[1, 132000,2012]]
     cost=classifier.predict(car_info)
@@ -170,13 +170,45 @@ def knn_accuracy():
     print(cm)
 
 def random_forest():
-    pass
+    dataset=input_csv(True)
+    dataset = dataset[['model_name', 'odometer_value', 'year_produced','under_10k']]
+    X = dataset.iloc[:, :-1].values
+    y = dataset.iloc[:, -1].values
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    y_train=y_train.astype('int')
+    sc = StandardScaler()
+    X_train = sc.fit_transform(X_train)
+    X_test = sc.transform(X_test)
+    classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
+    classifier.fit(X_train, y_train)
+    y_pred = classifier.predict(X_test)
+    cm = confusion_matrix(y_test, y_pred)
+    print(cm)
+    accuracy = accuracy_score(y_test, y_pred)
+    print("Random Forest Accuracy", accuracy)
+    print("Precision:",precision_score(y_test, y_pred))
+    print("Recall:",recall_score(y_test, y_pred))
+    print("F1-Score:",f1_score(y_test, y_pred))
+
+def random_forest_predict():
+    dataset=input_csv(True)
+    X = dataset[['model_name', 'odometer_value', 'year_produced']].values
+    y = dataset[['price_usd']].values
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    y_train=y_train.astype('int')
+    classifier = RandomForestClassifier(criterion = 'entropy', random_state = 10)
+    classifier.fit(X_train, y_train.ravel())
+    car_info = [[1, 132000,2012]]
+    cost=classifier.predict(car_info)
+    print('Random Forest Prediction of cost with this info', car_info,'cost will be :', cost)
+
 def main():
-    #decision_tree_predict()
+    decision_tree_predict()
     #decision_tree_accuracy()
-    knn_accuracy()
-    knn_predict()
+    #knn_accuracy()
+    #knn_predict()
     #get_car_info()
     #get_inventory()
-
+    random_forest()
+    random_forest_predict()
 main()
