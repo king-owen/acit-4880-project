@@ -19,7 +19,9 @@ import warnings
 from sklearn.exceptions import DataConversionWarning
 from sklearn.metrics import plot_confusion_matrix
 from sklearn.ensemble import RandomForestClassifier
-
+from scipy import stats
+import numpy as np
+from math import *
 
 def input_csv(for_algo):
     df = pd.read_csv("cars.csv", sep = ',')
@@ -59,8 +61,8 @@ def get_car_info():
     for car in car_list:
         input = input_csv(False)
         input = input.drop(input[input["model_name"] != car].index)
-        mm_list.append([input['price_usd'].mean().round(2),input['price_usd'].median(), input['price_usd'].min().round(2), input['price_usd'].max()])
-    data = pd.DataFrame(mm_list, index = car_list, columns = ['Mean', 'Median', 'Min', 'Max'])
+        mm_list.append([input['price_usd'].mean().round(2),input['price_usd'].median(), input['price_usd'].min().round(2), input['price_usd'].max(), input['price_usd'].std().round(2), len(input)])
+    data = pd.DataFrame(mm_list, index = car_list, columns = ['Mean', 'Median', 'Min', 'Max', 'std', 'Amount in Stock'])
     print(data)
 
 def get_inventory():
@@ -202,8 +204,13 @@ def random_forest_predict():
     cost=classifier.predict(car_info)
     print('Random Forest Prediction of cost with this info', car_info,'cost will be :', cost)
 
+def p_value():
+    t_value = (8873.79 - 10000)/(6165.01/sqrt(67))
+    p_value = stats.t.sf(np.abs(t_value), 67)
+    print(p_value)
+
 def main():
-    decision_tree_predict()
+    #decision_tree_predict()
     #decision_tree_accuracy()
     #knn_accuracy()
     #knn_predict()
@@ -211,4 +218,5 @@ def main():
     #get_inventory()
     random_forest()
     random_forest_predict()
+    #p_value()
 main()
