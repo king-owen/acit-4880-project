@@ -117,7 +117,7 @@ def decision_tree_accuracy():
     y = dataset.iloc[:, -1].values
     sc = StandardScaler()
     classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 10)
     X_train = sc.fit_transform(X_train)
     X_test = sc.transform(X_test)
     classifier.fit(X_train, y_train)
@@ -135,7 +135,7 @@ def decision_tree_predict():
     dataset=input_csv(True)
     X = dataset[['model_name', 'odometer_value', 'year_produced']].values
     y = dataset[['price_usd']].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 10)
     y_train=y_train.astype('int')
     classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 10)
     classifier.fit(X_train, y_train)
@@ -147,7 +147,7 @@ def knn_predict():
     dataset=input_csv(True)
     X = dataset[['model_name', 'odometer_value', 'year_produced']].values
     y = dataset[['price_usd']].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 10)
     y_train=y_train.astype('int')
     classifier = KNeighborsClassifier(n_neighbors=1)
     classifier.fit(X_train, y_train.ravel())
@@ -160,7 +160,7 @@ def knn_accuracy():
     feature_set = ['model_name', 'odometer_value', 'year_produced']
     features = dataset[feature_set] 
     target = dataset.under_10k
-    feature_train,feature_test, target_train, target_test = train_test_split(features, target, test_size=0.3, random_state=1)
+    feature_train,feature_test, target_train, target_test = train_test_split(features, target, test_size=0.25, random_state=10)
     model = KNeighborsClassifier(n_neighbors=5)
     model.fit(feature_train,target_train) 
     predictions = model.predict(feature_test)
@@ -176,12 +176,12 @@ def random_forest():
     dataset = dataset[['model_name', 'odometer_value', 'year_produced','under_10k']]
     X = dataset.iloc[:, :-1].values
     y = dataset.iloc[:, -1].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 10)
     y_train=y_train.astype('int')
     sc = StandardScaler()
     X_train = sc.fit_transform(X_train)
     X_test = sc.transform(X_test)
-    classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 0)
+    classifier = RandomForestClassifier(n_estimators = 10, criterion = 'entropy', random_state = 10)
     classifier.fit(X_train, y_train)
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
@@ -196,7 +196,7 @@ def random_forest_predict():
     dataset=input_csv(True)
     X = dataset[['model_name', 'odometer_value', 'year_produced']].values
     y = dataset[['price_usd']].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 10)
     y_train=y_train.astype('int')
     classifier = RandomForestClassifier(criterion = 'entropy', random_state = 10)
     classifier.fit(X_train, y_train.ravel())
@@ -212,11 +212,11 @@ def p_value():
 def main():
     #decision_tree_predict()
     #decision_tree_accuracy()
-    #knn_accuracy()
-    #knn_predict()
+    knn_accuracy()
+    knn_predict()
     #get_car_info()
     #get_inventory()
-    random_forest()
-    random_forest_predict()
+    #random_forest()
+    #random_forest_predict()
     #p_value()
 main()
