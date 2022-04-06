@@ -124,12 +124,12 @@ kind: Service
 metadata:
   name: load-mysql
 spec:
-  #type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
+  #type: NodePort
   #loadBalancerIP: 172.68.0.2
   ports:
-  - protocol: TCP
-    port: 33066
+  #- protocol: TCP
+  - port: 33066
     targetPort: 3306
   selector:
     app: mysql
@@ -140,15 +140,15 @@ kind: Service
 metadata:
   name: load-ftp
 spec:
-  #type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
+  #type: NodePort
   ports:
   - name: command
-    protocol: TCP
+    #protocol: TCP
     port: 211
     targetPort: 21
   - name: data
-    protocol: TCP
+    #protocol: TCP
     port: 200
     targetPort: 20
   selector:
@@ -173,11 +173,11 @@ kind: Service
 metadata:
   name: load-auth
 spec:
-  #type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
+  #type: NodePort
   ports:
-  - protocol: TCP
-    port: 8082
+  #- protocol: TCP
+  - port: 8082
     targetPort: 8081
   selector:
     app: auth
@@ -188,11 +188,11 @@ kind: Service
 metadata:
   name: load-upload
 spec:
-  #type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
+  #type: NodePort
   ports:
-  - protocol: TCP
-    port: 50000
+  #- protocol: TCP
+  - port: 50000
     targetPort: 5000
   selector:
     app: upload
@@ -203,11 +203,11 @@ kind: Service
 metadata:
   name: load-stream
 spec:
-  #type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
+  #type: NodePort
   ports:
-  - protocol: TCP
-    port: 50500
+  #- protocol: TCP
+  - port: 50500
     targetPort: 5050
   selector:
     app: stream
