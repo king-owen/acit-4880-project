@@ -37,6 +37,7 @@ spec:
     spec:
       containers:
       - name: ftp
+        #image: file_system
         image: kingofthewestwest/file_2
         ports:
           - containerPort: 21
