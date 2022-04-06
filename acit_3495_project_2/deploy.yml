@@ -124,11 +124,11 @@ kind: Service
 metadata:
   name: load-mysql
 spec:
-  #type: LoadBalancer
+  type: LoadBalancer
   #loadBalancerIP: 172.68.0.2
   ports:
-  - port: 3306
-    #targetPort: 3306
+  - port: 33066
+    targetPort: 3306
   selector:
     app: mysql
 ---
@@ -141,10 +141,10 @@ spec:
   type: LoadBalancer
   ports:
   - name: command
-    port: 21
+    port: 211
     targetPort: 21
   - name: data
-    port: 20
+    port: 200
     targetPort: 20
   selector:
     app: ftp
@@ -170,7 +170,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 8081
+  - port: 80811
     targetPort: 8081
   selector:
     app: auth
@@ -183,7 +183,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 5000
+  - port: 50000
     targetPort: 5000
   selector:
     app: upload
@@ -196,7 +196,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 5050
+  - port: 50500
     targetPort: 5050
   selector:
     app: stream
