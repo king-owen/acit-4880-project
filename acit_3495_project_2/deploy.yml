@@ -125,6 +125,7 @@ metadata:
   name: load-mysql
 spec:
   #type: LoadBalancer
+  type: NodePort
   #loadBalancerIP: 172.68.0.2
   ports:
   - port: 33066
@@ -139,6 +140,7 @@ metadata:
   name: load-ftp
 spec:
   #type: LoadBalancer
+  type: NodePort
   ports:
   - name: command
     port: 211
@@ -169,6 +171,7 @@ metadata:
   name: load-auth
 spec:
   #type: LoadBalancer
+  type: NodePort
   ports:
   - port: 8082
     targetPort: 8081
@@ -182,6 +185,7 @@ metadata:
   name: load-upload
 spec:
   #type: LoadBalancer
+  type: NodePort
   ports:
   - port: 50000
     targetPort: 5000
@@ -195,6 +199,7 @@ metadata:
   name: load-stream
 spec:
   #type: LoadBalancer
+  type: NodePort
   ports:
   - port: 50500
     targetPort: 5050
