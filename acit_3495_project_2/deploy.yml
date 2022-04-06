@@ -128,7 +128,8 @@ spec:
   type: NodePort
   #loadBalancerIP: 172.68.0.2
   ports:
-  - port: 33066
+  - protocol: TCP
+    port: 33066
     targetPort: 3306
   selector:
     app: mysql
@@ -143,9 +144,11 @@ spec:
   type: NodePort
   ports:
   - name: command
+    protocol: TCP
     port: 211
     targetPort: 21
   - name: data
+    protocol: TCP
     port: 200
     targetPort: 20
   selector:
@@ -173,7 +176,8 @@ spec:
   #type: LoadBalancer
   type: NodePort
   ports:
-  - port: 8082
+  - protocol: TCP
+    port: 8082
     targetPort: 8081
   selector:
     app: auth
@@ -187,7 +191,8 @@ spec:
   #type: LoadBalancer
   type: NodePort
   ports:
-  - port: 50000
+  - protocol: TCP
+    port: 50000
     targetPort: 5000
   selector:
     app: upload
@@ -201,7 +206,8 @@ spec:
   #type: LoadBalancer
   type: NodePort
   ports:
-  - port: 50500
+  - protocol: TCP
+    port: 50500
     targetPort: 5050
   selector:
     app: stream
