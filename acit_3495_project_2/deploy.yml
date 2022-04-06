@@ -136,12 +136,25 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: load-ftp
+  name: load-ftp-command
 spec:
-  #type: LoadBalancer
+  type: LoadBalancer
   ports:
   - port: 21
-    #targetPort: 21
+    targetPort: 21
+  selector:
+    app: ftp
+---
+#service for ftp
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-ftp-data
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 20
+    targetPort: 20
   selector:
     app: ftp
 ---
