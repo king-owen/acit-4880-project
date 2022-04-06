@@ -44,6 +44,7 @@ def upload_file():
     if check_login() != True:
         return redirect("http://load-auth:8081/login")
     if request.method == 'POST':
+        print(request.files['file'])
         session = ftplib.FTP('load-ftp', 'root', 'password')
         f = request.files['file']
         #f.save(f.filename)
